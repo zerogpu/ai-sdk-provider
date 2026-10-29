@@ -1,0 +1,12 @@
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{"role":"assistant","content":""}}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{"content":"Hello"}}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{"content":"!"}}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{"content":" How"}}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{"content":" can"}}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{"content":" I"}}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{"content":" help"}}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{"content":" you"}}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{"content":" today"}}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{"content":"?"}}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","object":"chat.completion.chunk","created":1793284788,"model":"gpt-5.4-nano","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+{"id":"chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM","created":1793284788,"model":"gpt-5.4-nano","object":"chat.completion.chunk","choices":[{"index":0,"delta":{}}],"usage":{"completion_tokens":12,"prompt_tokens":7,"total_tokens":19,"completion_tokens_details":{"reasoning_tokens":0},"prompt_tokens_details":{"cached_tokens":0}}}

@@ -1,0 +1,319 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`doGenerate > should extract text content 1`] = `
+{
+  "content": [
+    {
+      "text": "Hello! How can I assist you today?",
+      "type": "text",
+    },
+  ],
+  "finishReason": {
+    "raw": "stop",
+    "unified": "stop",
+  },
+  "request": {
+    "body": {
+      "categories": undefined,
+      "frequency_penalty": undefined,
+      "max_keywords": undefined,
+      "max_tokens": undefined,
+      "messages": [
+        {
+          "content": "Hello",
+          "role": "user",
+        },
+      ],
+      "metadata": undefined,
+      "model": "gpt-4.1-mini",
+      "presence_penalty": undefined,
+      "reasoning_effort": undefined,
+      "response_format": undefined,
+      "seed": undefined,
+      "stop": undefined,
+      "temperature": undefined,
+      "tool_choice": undefined,
+      "tools": undefined,
+      "top_k": undefined,
+      "top_p": undefined,
+    },
+  },
+  "response": {
+    "body": {
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+            "content": "Hello! How can I assist you today?",
+            "role": "assistant",
+          },
+        },
+      ],
+      "created": 1793284779,
+      "id": "chatcmpl-EeLZzQZQ6sd8rABXYSuEq63M0l5HV",
+      "model": "gpt-4.1-mini",
+      "object": "chat.completion",
+      "service_tier": "default",
+      "usage": {
+        "completion_tokens": 9,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+        },
+        "prompt_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+        },
+        "total_tokens": 17,
+      },
+    },
+    "headers": {
+      "content-length": "431",
+      "content-type": "application/json",
+    },
+    "id": "chatcmpl-EeLZzQZQ6sd8rABXYSuEq63M0l5HV",
+    "modelId": "gpt-4.1-mini",
+    "timestamp": 2026-10-29T14:39:39.000Z,
+  },
+  "usage": {
+    "inputTokens": {
+      "cacheRead": undefined,
+      "cacheWrite": undefined,
+      "noCache": 8,
+      "total": 8,
+    },
+    "outputTokens": {
+      "reasoning": 0,
+      "text": 9,
+      "total": 9,
+    },
+    "raw": {
+      "completion_tokens": 9,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+      },
+      "prompt_tokens": 8,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+      },
+      "total_tokens": 17,
+    },
+  },
+  "warnings": [],
+}
+`;
+
+exports[`doStream > should stream parallel tool call deltas 1`] = `
+[
+  {
+    "type": "stream-start",
+    "warnings": [],
+  },
+  {
+    "id": "chatcmpl-EeLaAPxDTyLqOm4DXrucvH7D14FRl",
+    "modelId": "gpt-4.1-mini",
+    "timestamp": 2026-10-29T14:39:50.000Z,
+    "type": "response-metadata",
+  },
+  {
+    "id": "call_mltad8JYW8oaPq0n3qqLSdgL",
+    "toolName": "weather",
+    "type": "tool-input-start",
+  },
+  {
+    "delta": "{"ci",
+    "id": "call_mltad8JYW8oaPq0n3qqLSdgL",
+    "type": "tool-input-delta",
+  },
+  {
+    "delta": "ty": ",
+    "id": "call_mltad8JYW8oaPq0n3qqLSdgL",
+    "type": "tool-input-delta",
+  },
+  {
+    "delta": ""Paris",
+    "id": "call_mltad8JYW8oaPq0n3qqLSdgL",
+    "type": "tool-input-delta",
+  },
+  {
+    "delta": ""}",
+    "id": "call_mltad8JYW8oaPq0n3qqLSdgL",
+    "type": "tool-input-delta",
+  },
+  {
+    "id": "call_HaZIBGxtB174cQjQmL0NZCni",
+    "toolName": "weather",
+    "type": "tool-input-start",
+  },
+  {
+    "delta": "{"ci",
+    "id": "call_HaZIBGxtB174cQjQmL0NZCni",
+    "type": "tool-input-delta",
+  },
+  {
+    "delta": "ty": ",
+    "id": "call_HaZIBGxtB174cQjQmL0NZCni",
+    "type": "tool-input-delta",
+  },
+  {
+    "delta": ""Rome"",
+    "id": "call_HaZIBGxtB174cQjQmL0NZCni",
+    "type": "tool-input-delta",
+  },
+  {
+    "delta": "}",
+    "id": "call_HaZIBGxtB174cQjQmL0NZCni",
+    "type": "tool-input-delta",
+  },
+  {
+    "id": "call_mltad8JYW8oaPq0n3qqLSdgL",
+    "type": "tool-input-end",
+  },
+  {
+    "input": "{"city": "Paris"}",
+    "toolCallId": "call_mltad8JYW8oaPq0n3qqLSdgL",
+    "toolName": "weather",
+    "type": "tool-call",
+  },
+  {
+    "id": "call_HaZIBGxtB174cQjQmL0NZCni",
+    "type": "tool-input-end",
+  },
+  {
+    "input": "{"city": "Rome"}",
+    "toolCallId": "call_HaZIBGxtB174cQjQmL0NZCni",
+    "toolName": "weather",
+    "type": "tool-call",
+  },
+  {
+    "finishReason": {
+      "raw": "tool_calls",
+      "unified": "tool-calls",
+    },
+    "type": "finish",
+    "usage": {
+      "inputTokens": {
+        "cacheRead": undefined,
+        "cacheWrite": undefined,
+        "noCache": 52,
+        "total": 52,
+      },
+      "outputTokens": {
+        "reasoning": 0,
+        "text": 42,
+        "total": 42,
+      },
+      "raw": {
+        "completion_tokens": 42,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+        },
+        "prompt_tokens": 52,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+        },
+        "total_tokens": 94,
+      },
+    },
+  },
+]
+`;
+
+exports[`doStream > should stream text 1`] = `
+[
+  {
+    "type": "stream-start",
+    "warnings": [],
+  },
+  {
+    "id": "chatcmpl-EeLa8nKPcteWBy4reBvNiEJJMMAcM",
+    "modelId": "gpt-5.4-nano",
+    "timestamp": 2026-10-29T14:39:48.000Z,
+    "type": "response-metadata",
+  },
+  {
+    "id": "0",
+    "type": "text-start",
+  },
+  {
+    "delta": "Hello",
+    "id": "0",
+    "type": "text-delta",
+  },
+  {
+    "delta": "!",
+    "id": "0",
+    "type": "text-delta",
+  },
+  {
+    "delta": " How",
+    "id": "0",
+    "type": "text-delta",
+  },
+  {
+    "delta": " can",
+    "id": "0",
+    "type": "text-delta",
+  },
+  {
+    "delta": " I",
+    "id": "0",
+    "type": "text-delta",
+  },
+  {
+    "delta": " help",
+    "id": "0",
+    "type": "text-delta",
+  },
+  {
+    "delta": " you",
+    "id": "0",
+    "type": "text-delta",
+  },
+  {
+    "delta": " today",
+    "id": "0",
+    "type": "text-delta",
+  },
+  {
+    "delta": "?",
+    "id": "0",
+    "type": "text-delta",
+  },
+  {
+    "id": "0",
+    "type": "text-end",
+  },
+  {
+    "finishReason": {
+      "raw": "stop",
+      "unified": "stop",
+    },
+    "type": "finish",
+    "usage": {
+      "inputTokens": {
+        "cacheRead": undefined,
+        "cacheWrite": undefined,
+        "noCache": 7,
+        "total": 7,
+      },
+      "outputTokens": {
+        "reasoning": 0,
+        "text": 12,
+        "total": 12,
+      },
+      "raw": {
+        "completion_tokens": 12,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+        },
+        "prompt_tokens": 7,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+        },
+        "total_tokens": 19,
+      },
+    },
+  },
+]
+`;

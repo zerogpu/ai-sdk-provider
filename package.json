@@ -1,0 +1,80 @@
+{
+  "name": "@zerogpu/ai-sdk-provider",
+  "version": "0.1.0",
+  "description": "ZeroGPU provider for the AI SDK",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "src",
+    "!src/**/*.test.ts",
+    "!src/**/__snapshots__",
+    "!src/**/__fixtures__",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsdown",
+    "type-check": "tsc --noEmit",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "test": "pnpm test:node && pnpm test:edge",
+    "test:update": "pnpm test:node -u",
+    "test:watch": "vitest --config vitest.node.config.js",
+    "test:edge": "vitest --config vitest.edge.config.js --run",
+    "test:node": "vitest --config vitest.node.config.js --run"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@ai-sdk/provider": "4.0.34",
+    "@ai-sdk/provider-utils": "5.0.70"
+  },
+  "devDependencies": {
+    "@ai-sdk/test-server": "2.0.4",
+    "@edge-runtime/vm": "5.0.0",
+    "@types/node": "22.19.19",
+    "oxfmt": "0.75.0",
+    "tsdown": "0.23.4",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5",
+    "zod": "3.25.76"
+  },
+  "peerDependencies": {
+    "zod": "^3.25.76 || ^4.1.8"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "homepage": "https://github.com/zerogpu/ai-sdk-provider#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zerogpu/ai-sdk-provider.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zerogpu/ai-sdk-provider/issues"
+  },
+  "keywords": [
+    "ai",
+    "ai-sdk",
+    "vercel-ai",
+    "zerogpu",
+    "provider",
+    "llm",
+    "embeddings",
+    "text-to-speech",
+    "transcription"
+  ]
+}

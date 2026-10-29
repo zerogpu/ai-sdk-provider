@@ -1,0 +1,23 @@
+// Same formatter settings as the vercel/ai repository.
+// https://oxc.rs/docs/guide/usage/formatter/config-file-reference.html
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "arrowParens": "avoid",
+  "bracketSameLine": false,
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "ignorePatterns": [
+    "**/__fixtures__/**",
+    "**/__snapshots__/**",
+    "**/tsconfig*.json",
+    "pnpm-lock.yaml",
+  ],
+  "printWidth": 80,
+  "quoteProps": "as-needed",
+  "semi": true,
+  "singleQuote": true,
+  "sortPackageJson": false,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "useTabs": false,
+}

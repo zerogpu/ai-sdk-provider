@@ -1,0 +1,38 @@
+{
+  "id": "chatcmpl-EeLa1FUzNBwKNxt8Yoj8P151Srd4N",
+  "created": 1793284781,
+  "model": "gpt-4.1-mini",
+  "object": "chat.completion",
+  "choices": [
+    {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "tool_calls": [
+          {
+            "function": {
+              "arguments": "{\"city\":\"Paris\"}",
+              "name": "weather"
+            },
+            "id": "call_7Zlq8pVJAsMAispduiY6jHcQ",
+            "type": "function"
+          }
+        ],
+        "content": null
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 13,
+    "prompt_tokens": 50,
+    "total_tokens": 63,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "service_tier": "default"
+}

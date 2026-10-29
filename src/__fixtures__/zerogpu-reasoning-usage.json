@@ -1,0 +1,27 @@
+{
+  "id": "chatcmpl-f7c48024-bd55-4bd5-bf39-8d0f1092d74c",
+  "created": 1793284781,
+  "model": "glm-5.3-flash",
+  "object": "chat.completion",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**17 × 23 = 391**\n\nA quick way to see this: (20 − 3)(20 + 3) = 20² − 3² = 400 − 9 = 391",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 190,
+    "prompt_tokens": 20,
+    "total_tokens": 210,
+    "completion_tokens_details": {
+      "reasoning_tokens": 143
+    },
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  }
+}

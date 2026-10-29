@@ -1,0 +1,34 @@
+{
+  "task": "transcribe",
+  "language": "english",
+  "duration": 3.12,
+  "text": "Hello from zero GPU in the AISDK.",
+  "segments": [
+    {
+      "id": 0,
+      "seek": 0,
+      "start": 0.0,
+      "end": 3.0,
+      "text": " Hello from zero GPU in the AISDK.",
+      "tokens": [
+        50364,
+        2425,
+        490,
+        4018,
+        18407,
+        294,
+        264,
+        316,
+        2343,
+        35,
+        42,
+        13,
+        50514
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.483447,
+      "compression_ratio": 0.809524,
+      "no_speech_prob": 0.015484
+    }
+  ]
+}

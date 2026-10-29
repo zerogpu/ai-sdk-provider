@@ -1,0 +1,35 @@
+{
+  "id": "3f06ffcc-4bf5-4106-a019-e6386d47440b",
+  "object": "chat.completion",
+  "created": 1793284787,
+  "model": "zlm-v1-iab-classify-edge",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"audience\":[{\"name\":\"Laptops\",\"score\":0.7895236167380252},{\"name\":\"Computers\",\"score\":0.7461174510136588},{\"name\":\"Computing\",\"score\":0.6866066665895839},{\"name\":\"Laptops\",\"score\":0.6626902862575443},{\"name\":\"Technology & Computing\",\"score\":0.6616449547514721},{\"name\":\"Consumer Electronics\",\"score\":0.6100460738914703}],\"content\":{\"iab_1_0\":[{\"name\":\"Portable\",\"score\":0.8754153951140519},{\"name\":\"Technology & Computing\",\"score\":0.8740526838824428}],\"iab_2_2\":[{\"name\":\"Laptops\",\"score\":0.8754153951140519},{\"name\":\"Computing\",\"score\":0.8740526838824428},{\"name\":\"Desktops\",\"score\":0.6713182083699485},{\"name\":\"Consumer Electronics\",\"score\":0.6492158037362685},{\"name\":\"Technology & Computing\",\"score\":0.6229597798078987}]}}",
+        "refusal": null,
+        "annotations": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 11,
+    "completion_tokens": 182,
+    "total_tokens": 193,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "service_tier": "default"
+}
