@@ -1,0 +1,180 @@
+name: Publish to npm
+
+# Publishes @zerogpu/ai-sdk-provider to the public npm registry from `main`
+# using npm OIDC "trusted publishing" — there is NO long-lived NPM_TOKEN.
+#
+# RELEASE POLICY
+#   Every push to `main` runs the checks (type-check, format, tests, build) and
+#   then publishes package.json's version IF that exact version is not on npm
+#   yet. Pushes that do not bump the version are no-ops (the publish step is
+#   skipped), so releasing = bump `version` in package.json and merge to main.
+#   npm rejects re-publishing an existing version, so a re-run can never
+#   overwrite a shipped release.
+#
+#   dist-tag: plain X.Y.Z -> `latest`; a prerelease (X.Y.Z-beta.1, ...) -> `next`
+#   (prereleases are invisible to caret ranges and to a bare `npm install`).
+#
+#   Provenance (the "Built and signed on GitHub Actions" badge) is generated
+#   automatically by trusted publishing: publishConfig.provenance is true and
+#   both the repo and the package are public. After a successful publish a
+#   GitHub release `v<version>` is created with generated notes.
+#
+# ONE-TIME SETUP
+#   npm only lets a trusted publisher be attached to a package that already
+#   exists, so the very first version is a manual bootstrap publish by a
+#   maintainer (logged in to npmjs with a 2FA account):
+#     pnpm install && pnpm build
+#     npm publish --no-provenance --@zerogpu:registry=https://registry.npmjs.org
+#   (--no-provenance: automatic provenance only works inside CI; the scope
+#   override defeats a local ~/.npmrc that maps @zerogpu to GitHub Packages.)
+#   Then attach this workflow as the package's trusted publisher (npm >= 11.15):
+#     npx -y npm@11 trust github @zerogpu/ai-sdk-provider \
+#       --file publish.yml --repository zerogpu/ai-sdk-provider --environment prod
+#   npm allows ONE trusted publisher per package, pinned to this exact workflow
+#   filename and the `prod` GitHub environment, so keep both names stable.
+#
+# Requirements (satisfied below): Node >= 22.14, npm >= 11.5.1, `id-token: write`.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: publish-npm
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # A manual run from any other branch must never publish.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: prod
+    permissions:
+      contents: write # gh release create
+      id-token: write # lets the job mint the OIDC token npm exchanges for publish auth
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      # Pinned to the v11 line: npm 12.0.0 ships a broken libnpmpublish that
+      # crashes with "Cannot find module 'sigstore'" on any publish (npm/cli#9722).
+      - name: Upgrade npm (OIDC trusted publishing needs >= 11.5.1)
+        run: npm install -g npm@11 && npm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type-check
+        run: pnpm type-check
+
+      - name: Format check
+        run: pnpm format:check
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      # Idempotency gate: a push to main that does not bump the version is a
+      # no-op. `npm view <name>@<version> version` prints the version when it
+      # exists and nothing (or a 404) when it does not.
+      - name: Resolve version, dist-tag and whether to publish
+        id: pkg
+        run: |
+          NAME="$(node -p "require('./package.json').name")"
+          VERSION="$(node -p "require('./package.json').version")"
+          if [[ "$VERSION" == *-* ]]; then TAG="next"; else TAG="latest"; fi
+          FOUND="$(npm view "${NAME}@${VERSION}" version 2>/dev/null || true)"
+          if [[ "$FOUND" == "$VERSION" ]]; then
+            echo "::notice::${NAME}@${VERSION} is already on npm; nothing to publish."
+            PUBLISH="false"
+          else
+            echo "Will publish ${NAME}@${VERSION} under dist-tag ${TAG}"
+            PUBLISH="true"
+          fi
+          {
+            echo "name=${NAME}"
+            echo "version=${VERSION}"
+            echo "tag=${TAG}"
+            echo "publish=${PUBLISH}"
+          } >> "$GITHUB_OUTPUT"
+
+      # No NODE_AUTH_TOKEN: auth is the OIDC trusted publisher configured on
+      # npmjs for this repo + workflow file + environment. Provenance is
+      # generated automatically (publishConfig.provenance = true).
+      - name: Publish (OIDC, no token)
+        if: steps.pkg.outputs.publish == 'true'
+        run: npm publish --tag "${{ steps.pkg.outputs.tag }}"
+
+      # The registry read path can lag a publish by a couple of minutes.
+      - name: Verify the version is visible on npm
+        if: steps.pkg.outputs.publish == 'true'
+        env:
+          NAME: ${{ steps.pkg.outputs.name }}
+          VERSION: ${{ steps.pkg.outputs.version }}
+          TAG: ${{ steps.pkg.outputs.tag }}
+        run: |
+          for i in $(seq 1 12); do
+            FOUND="$(npm view "${NAME}@${VERSION}" version 2>/dev/null || true)"
+            if [[ "$FOUND" == "$VERSION" ]]; then
+              echo "${NAME}@${VERSION} is on npm; dist-tags: $(npm view "$NAME" dist-tags --json)"
+              exit 0
+            fi
+            echo "not visible yet (attempt ${i}/12), waiting 15 s..."
+            sleep 15
+          done
+          echo "::error::${NAME}@${VERSION} not visible on npm 3 minutes after publish"
+          exit 1
+
+      - name: Create GitHub release
+        if: steps.pkg.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.pkg.outputs.version }}
+          TAG: ${{ steps.pkg.outputs.tag }}
+        run: |
+          REL="v${VERSION}"
+          if gh release view "$REL" >/dev/null 2>&1; then
+            echo "release ${REL} already exists; skipping"
+            exit 0
+          fi
+          EXTRA=()
+          [[ "$TAG" == "next" ]] && EXTRA+=(--prerelease)
+          gh release create "$REL" --target "$GITHUB_SHA" --title "$REL" --generate-notes "${EXTRA[@]}"
+
+      - name: Summary
+        env:
+          NAME: ${{ steps.pkg.outputs.name }}
+          VERSION: ${{ steps.pkg.outputs.version }}
+          TAG: ${{ steps.pkg.outputs.tag }}
+          PUBLISHED: ${{ steps.pkg.outputs.publish }}
+        run: |
+          {
+            if [[ "$PUBLISHED" == "true" ]]; then
+              echo "### Published ${NAME}@${VERSION} (OIDC, provenance)"
+              echo ""
+              echo "dist-tag: \`${TAG}\`"
+              echo ""
+              echo '```bash'
+              echo "npm install ${NAME}@${VERSION}"
+              echo '```'
+            else
+              echo "### Nothing published"
+              echo ""
+              echo "${NAME}@${VERSION} is already on npm. Bump \`version\` in package.json to release."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
