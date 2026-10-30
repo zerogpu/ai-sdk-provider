@@ -1,6 +1,6 @@
 {
   "name": "@zerogpu/ai-sdk-provider",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ZeroGPU provider for the AI SDK",
   "type": "module",
   "license": "MIT",
@@ -13,7 +13,8 @@
     "!src/**/*.test.ts",
     "!src/**/__snapshots__",
     "!src/**/__fixtures__",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "rm -rf dist && tsdown",
