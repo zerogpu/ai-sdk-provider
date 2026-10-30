@@ -99,7 +99,7 @@ for await (const textPart of result.textStream) {
 
 ```ts
 import { zerogpu } from '@zerogpu/ai-sdk-provider';
-import { generateText, stepCountIs, tool } from 'ai';
+import { generateText, isStepCount, tool } from 'ai';
 import { z } from 'zod';
 
 const { text } = await generateText({
@@ -111,7 +111,7 @@ const { text } = await generateText({
       execute: async ({ city }) => ({ city, temperatureC: 21 }),
     }),
   },
-  stopWhen: stepCountIs(3),
+  stopWhen: isStepCount(3),
   prompt: 'What is the weather in Paris?',
 });
 ```
@@ -220,10 +220,10 @@ const { text: signals } = await generateText({
   },
 });
 
-// Zero-shot classification with DeBERTa: the labels are the system message
+// Zero-shot classification with DeBERTa: the labels are passed as instructions
 const { text: scores } = await generateText({
   model: zerogpu('deberta-v3-small'),
-  system: '[Sports,Technology,Finance]',
+  instructions: '[Sports,Technology,Finance]',
   prompt: 'Apple unveiled its next-generation M5 chip.',
 });
 ```
